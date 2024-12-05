@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Book - ABCBOOKS</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(8px);
+        }
+        .form-container {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            max-width: 400px;
+            width: 100%;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add a New Book</h2>
+        <form id="addBookForm">
+            <input type="text" id="title" placeholder="Title" required>
+            <input type="text" id="authors" placeholder="Authors" required>
+            <input type="text" id="publisher" placeholder="Publisher" required>
+            <input type="number" id="year" placeholder="Year" required>
+            <input type="file" id="bookImage" accept="image/*"> 
+            <button type="submit">Add Book</button>
+        </form>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://td5uvgjnoa.execute-api.us-east-1.amazonaws.com/apiDevelopment2';
+        const S3_UPLOAD_URL = 'https://mybookbucketnow.s3.us-east-1.amazonaws.com/books_images/';
+
+        
+        function validateYear(year) {
+            
+            const yearRegex = /^[0-9]{4}$/;
+            if (!yearRegex.test(year)) {
+                return "Year must be a 4-digit number.";
+            }
+
+            const yearInt = parseInt(year, 10);
+            
+            if (yearInt <= 1000 || yearInt >= 2025) {
+                return "Year must be a positive number greater than 1000 and less than 2025.";
+            }
+
+            return null;  
+        }
+
+        async function uploadImage(file) {
+            const imageName = `${Date.now()}_${file.name}`;
+            const imageUrl = `${S3_UPLOAD_URL}${imageName}`;
+            
+           
+            await fetch(imageUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': file.type,
+                },
+                body: file,
+            });
+
+            return imageUrl;
+        }
+
+        document.getElementById('addBookForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const authors = document.getElementById('authors').value;
+            const publisher = document.getElementById('publisher').value;
+            const year = document.getElementById('year').value;
+            const imageFile = document.getElementById('bookImage').files[0];
+            let imageUrl = `${S3_UPLOAD_URL}default.jpg`; 
+
+       
+            const yearError = validateYear(year);
+            if (yearError) {
+                alert(yearError);
+                return;
+            }
+
+            try {
+                if (imageFile) {
+                    imageUrl = await uploadImage(imageFile); 
+                }
+
+                const book = {
+                    Title: title,
+                    Authors: authors,
+                    Publisher: publisher,
+                    Year: parseInt(year, 10),
+                    Image: imageUrl,
+                };
+
+                
+                fetch(`${API_BASE_URL}/books`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(book),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || 'Book added successfully!');
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => console.error('Error adding book:', error));
+            } catch (error) {
+                console.error('Error uploading image or saving book:', error);
+                alert('Failed to add book. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

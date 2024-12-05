@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delete Book - ABCBOOKS</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(8px);
+        }
+        .form-container {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            max-width: 400px;
+            width: 100%;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Delete Book</h2>
+        <p id="bookDetails">Are you sure you want to delete this book?</p>
+        <button id="deleteButton">Confirm Delete</button>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://td5uvgjnoa.execute-api.us-east-1.amazonaws.com/apiDevelopment2';
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('book_id');  
+
+        console.log("Retrieved book_id:", bookId);
+
+        
+        if (!bookId) {
+            alert('No book ID provided. Redirecting to dashboard.');
+            window.location.href = 'dashboard.html'; 
+        }
+
+        
+        document.getElementById('deleteButton').addEventListener('click', function() {
+            
+            fetch(`${API_BASE_URL}/books/${bookId}`, {  
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || 'Book deleted successfully!');
+                window.location.href = 'dashboard.html'; 
+            })
+            .catch(error => console.error('Error deleting book:', error));
+        });
+    </script>
+</body>
+</html>

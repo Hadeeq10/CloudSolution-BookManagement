@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Book - ABCBOOKS</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(8px);
+        }
+        .form-container {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            max-width: 400px;
+            width: 100%;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Edit Book Details</h2>
+        <form id="editBookForm">
+            <input type="text" id="title" placeholder="New Title">
+            <input type="text" id="authors" placeholder="New Authors">
+            <input type="text" id="publisher" placeholder="New Publisher">
+            <input type="number" id="year" placeholder="New Year">
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://td5uvgjnoa.execute-api.us-east-1.amazonaws.com/apiDevelopment2';
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('book_id');  
+
+        if (!bookId) {
+            alert('No book ID provided. Redirecting to dashboard.');
+            window.location.href = 'dashboard.html'; 
+        }
+
+        
+        window.onload = function() {
+            fetch(`${API_BASE_URL}/books/${bookId}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const book = data[0];
+                    document.getElementById('title').value = book.Title;
+                    document.getElementById('authors').value = book.Authors;
+                    document.getElementById('publisher').value = book.Publisher;
+                    document.getElementById('year').value = book.Year;
+                }
+            })
+            .catch(error => console.error('Error fetching book details:', error));
+        };
+
+        document.getElementById('editBookForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const updatedBook = {
+                Title: document.getElementById('title').value,
+                Authors: document.getElementById('authors').value,
+                Publisher: document.getElementById('publisher').value,
+                Year: parseInt(document.getElementById('year').value, 10)
+            };
+
+            fetch(`${API_BASE_URL}/books/${bookId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedBook)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || 'Book updated successfully!');
+                window.location.href = 'dashboard.html'; 
+            })
+            .catch(error => console.error('Error updating book:', error));
+        });
+    </script>
+</body>
+</html>
