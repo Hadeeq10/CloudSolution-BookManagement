@@ -1,0 +1,70 @@
+{
+  "Books": [
+    {
+      "PutRequest": {
+        "Item": {
+          "book_id": { "S": "Automating DevOps with GitLab CI/CD Pipelines" },
+          "Title": { "S": "Automating DevOps with GitLab CI/CD Pipelines" },
+          "Authors": { "S": "Christopher Cowell, Nicholas Lotz and Chris Timberlake" },
+          "Publisher": { "S": "Packt Publishing" },
+          "Year": { "N": "2023" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "book_id": { "S": "AWS Cookbook" },
+          "Title": { "S": "AWS Cookbook" },
+          "Authors": { "S": "John Culkin and Mike Zazon" },
+          "Publisher": { "S": "O'Reilly Media" },
+          "Year": { "N": "2021" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "book_id": { "S": "Serverless Development on AWS" },
+          "Title": { "S": "Serverless Development on AWS" },
+          "Authors": { "S": "Sheen Brisals and Luke Hedger" },
+          "Publisher": { "S": "O'Reilly Media" },
+          "Year": { "N": "2024" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "book_id": { "S": "Building Scalable Apps with Redis and Node.js" },
+          "Title": { "S": "Building Scalable Apps with Redis and Node.js" },
+          "Authors": { "S": "Joshua Johanan" },
+          "Publisher": { "S": "Packt Publishing" },
+          "Year": { "N": "2014" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "book_id": { "S": "Terraform Cookbook" },
+          "Title": { "S": "Terraform Cookbook" },
+          "Authors": { "S": "Kerim Satirli and Taylor Dolezal" },
+          "Publisher": { "S": "O'Reilly Media" },
+          "Year": { "N": "2024" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "book_id": { "S": "Amazon Web Services in Action" },
+          "Title": { "S": "Amazon Web Services in Action" },
+          "Authors": { "S": "Michael Wittig and Andreas Wittig" },
+          "Publisher": { "S": "Manning Publications" },
+          "Year": { "N": "2023" }
+        }
+      }
+    }
+  ]
+}
