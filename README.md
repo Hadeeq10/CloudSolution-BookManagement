@@ -79,3 +79,11 @@ You can change these policies according to your need.
 8. Goto Cognito and create a user pool. Inside that user pool, create an app client using Single Page application option.
 9. Create a user in your user pool and keep it as verified. You can choose how the user can be verified to sign in. You can also take AWS provided login page but I used my own.
 10. Next copy paste all the ids from the AWS services to the html files. Delete all the html files from the S3 bucket and then upload the newly edited files to the S3 bucket. Test the lambda functions.
+![1](https://github.com/user-attachments/assets/23b82a3e-3f61-4b44-9c32-de31ca34b004)
+![2](https://github.com/user-attachments/assets/80550a10-d373-40cc-9ab7-5c96da67550d)
+![3](https://github.com/user-attachments/assets/7d187c53-4a42-43ea-9f6b-9c9060249396)
+![4](https://github.com/user-attachments/assets/fa62260a-f95c-473a-af1d-5e7a2c10db7b)
+![5](https://github.com/user-attachments/assets/b02db66a-a444-46a4-9401-777a0b4a260c)
+![6](https://github.com/user-attachments/assets/88eb8a94-4822-4437-b2d0-859be4ce3c66)
+![7](https://github.com/user-attachments/assets/ea13eddd-7f85-4e3b-9a11-7ad1bc4facb5)
+
