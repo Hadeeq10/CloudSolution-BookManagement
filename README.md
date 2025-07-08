@@ -2,12 +2,15 @@
 
 # Problem Statement:
 ABCBooks is rolling out a new web-based application for its book collection to complement its existing book database application. The company has opted for Amazon DynamoDB and a serverless architecture using AWS Lambda for this implementation.
+
 The application is designed to perform four key functions:
 1. Display all books in the database to users.
 2. Enable users to add or delete database entries.
 3. Allow updates to non-key attributes of any book.
 4. Secure the application by integrating Amazon Cognito for user authorization.
 You are responsible for creating and implementing these functionalities, leveraging Amazon DynamoDB, AWS Lambda, and Amazon API Gateway. The front-end website can be developed using your preferred programming language. The final step will involve securing the application by integrating Amazon Cognito to authorize users.
+
+
 The books collection application will have the following components:
 1. A static front-end written in HTML/JavaScript or in Python hosted on Amazon S3.
 2. A serverless backend leveraging Amazon API Gateway, AWS Lambda, and Amazon Cognito.
